@@ -1,0 +1,109 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/object1793548688.json",
+  "title": "Root",
+  "type": "array",
+  "default": [],
+  "items":{
+    "$id": "#root/items",
+    "title": "Items",
+    "type": "object",
+    "required": [
+      "id",
+      "title",
+      "description",
+      "score",
+      "completed",
+      "completed_at",
+      "goal_id",
+      "created_at",
+      "updated_at"
+    ],
+    "properties": {
+      "id": {
+        "$id": "#root/items/id",
+        "title": "Id",
+        "type": "integer",
+        "examples": [
+          1
+        ],
+        "default": 0
+      },
+      "title": {
+        "$id": "#root/items/title",
+        "title": "Title",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "Audit current energy consumption"
+        ],
+        "pattern": "^.*$"
+      },
+      "description": {
+        "$id": "#root/items/description",
+        "title": "Description",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "Collect baseline data from all facilities"
+        ],
+        "pattern": "^.*$"
+      },
+      "score": {
+        "$id": "#root/items/score",
+        "title": "Score",
+        "type": "integer",
+        "examples": [
+          25
+        ],
+        "default": 0
+      },
+      "completed": {
+        "$id": "#root/items/completed",
+        "title": "Completed",
+        "type": "boolean",
+        "examples": [
+          false
+        ],
+        "default": true
+      },
+      "completed_at": {
+        "$id": "#root/items/completed_at",
+        "title": "Completed_at",
+        "type": "null",
+        "default": null
+      },
+      "goal_id": {
+        "$id": "#root/items/goal_id",
+        "title": "Goal_id",
+        "type": "integer",
+        "examples": [
+          1
+        ],
+        "default": 0
+      },
+      "created_at": {
+        "$id": "#root/items/created_at",
+        "title": "Created_at",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "2026-11-01T15:32:37.702778Z"
+        ],
+        "pattern": "^.*$"
+      },
+      "updated_at": {
+        "$id": "#root/items/updated_at",
+        "title": "Updated_at",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "2026-11-01T15:32:37.702778Z"
+        ],
+        "pattern": "^.*$"
+      }
+    }
+  }
+
+}

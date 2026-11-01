@@ -1,0 +1,103 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/object1793548713.json",
+  "title": "Root",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "description",
+    "score",
+    "completed",
+    "completed_at",
+    "goal_id",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "id": {
+      "$id": "#root/id",
+      "title": "Id",
+      "type": "integer",
+      "examples": [
+        1
+      ],
+      "default": 0
+    },
+    "title": {
+      "$id": "#root/title",
+      "title": "Title",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "Audit current energy consumption"
+      ],
+      "pattern": "^.*$"
+    },
+    "description": {
+      "$id": "#root/description",
+      "title": "Description",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "Collect baseline data from all facilities"
+      ],
+      "pattern": "^.*$"
+    },
+    "score": {
+      "$id": "#root/score",
+      "title": "Score",
+      "type": "integer",
+      "examples": [
+        25
+      ],
+      "default": 0
+    },
+    "completed": {
+      "$id": "#root/completed",
+      "title": "Completed",
+      "type": "boolean",
+      "examples": [
+        false
+      ],
+      "default": true
+    },
+    "completed_at": {
+      "$id": "#root/completed_at",
+      "title": "Completed_at",
+      "type": ["string", "null"],
+      "format": "date-time",
+      "default": null
+    },
+    "goal_id": {
+      "$id": "#root/goal_id",
+      "title": "Goal_id",
+      "type": "integer",
+      "examples": [
+        1
+      ],
+      "default": 0
+    },
+    "created_at": {
+      "$id": "#root/created_at",
+      "title": "Created_at",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "2026-11-01T15:32:37.702778Z"
+      ],
+      "pattern": "^.*$"
+    },
+    "updated_at": {
+      "$id": "#root/updated_at",
+      "title": "Updated_at",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "2026-11-01T15:32:37.702778Z"
+      ],
+      "pattern": "^.*$"
+    }
+  }
+}
