@@ -30,7 +30,7 @@ public class CompanySteps {
     public void autenticarParaGerenciarEmpresas() {
 
         Map<String, String> credentials = Map.of(
-                "email", "guilhermino@gmail.com",
+                "email", "alice@example.com",
                 "password", "password"
         );
 

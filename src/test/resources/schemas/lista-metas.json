@@ -1,0 +1,100 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/object1793545004.json",
+  "title": "Root",
+  "type": "array",
+  "default": [],
+  "items":{
+    "$id": "#root/items",
+    "title": "Items",
+    "type": "object",
+    "required": [
+      "id",
+      "title",
+      "description",
+      "dimension",
+      "tasks",
+      "company_id",
+      "created_at",
+      "updated_at"
+    ],
+    "properties": {
+      "id": {
+        "$id": "#root/items/id",
+        "title": "Id",
+        "type": "integer",
+        "examples": [
+          4
+        ],
+        "default": 0
+      },
+      "title": {
+        "$id": "#root/items/title",
+        "title": "Title",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "Reduzir consumo de energia"
+        ],
+        "pattern": "^.*$"
+      },
+      "description": {
+        "$id": "#root/items/description",
+        "title": "Description",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "Diminuir o consumo energético da empresa"
+        ],
+        "pattern": "^.*$"
+      },
+      "dimension": {
+        "$id": "#root/items/dimension",
+        "title": "Dimension",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "environmental"
+        ],
+        "pattern": "^.*$"
+      },
+      "tasks": {
+        "type": ["array", "null"],
+        "items": {
+          "type": "object"
+        }
+      },
+      "company_id": {
+        "$id": "#root/items/company_id",
+        "title": "Company_id",
+        "type": "integer",
+        "examples": [
+          1
+        ],
+        "default": 0
+      },
+      "created_at": {
+        "$id": "#root/items/created_at",
+        "title": "Created_at",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "2026-11-01T14:51:52.536298Z"
+        ],
+        "pattern": "^.*$"
+      },
+      "updated_at": {
+        "$id": "#root/items/updated_at",
+        "title": "Updated_at",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "2026-11-01T14:51:52.536343Z"
+        ],
+        "pattern": "^.*$"
+      }
+    }
+  }
+
+}
