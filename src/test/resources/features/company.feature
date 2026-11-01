@@ -17,6 +17,7 @@ Funcionalidade: Gerenciar empresas
     Então o status da resposta da empresa deve ser 201
     E a resposta da empresa deve possuir os campos obrigatórios
 
+  @regressivo
   Cenário: Tentar cadastrar uma empresa sem nome - POST /api/companies
     Dado que eu esteja autenticado para gerenciar empresas
     Quando eu cadastrar uma empresa sem informar o nome
@@ -30,6 +31,7 @@ Funcionalidade: Gerenciar empresas
     Então o status da resposta da empresa deve ser 200
     E a resposta da empresa deve possuir os campos obrigatórios
 
+  @regressivo
   Cenário: Consultar uma empresa inexistente - GET /api/companies/{id}
     Dado que eu esteja autenticado para gerenciar empresas
     Quando eu consultar a empresa com ID inexistente
@@ -43,6 +45,7 @@ Funcionalidade: Gerenciar empresas
     Então o status da resposta da empresa deve ser 200
     E a resposta da empresa deve possuir os campos obrigatórios
 
+  @regressivo
   Cenário: Tentar atualizar uma empresa com CNPJ já cadastrado - PUT /api/companies/{id}
     Dado que eu esteja autenticado para gerenciar empresas
     E que exista uma empresa cadastrada

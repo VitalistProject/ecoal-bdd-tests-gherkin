@@ -1,4 +1,3 @@
-
 # language: pt
 
 @funcional @regressivo @padrão
@@ -20,6 +19,7 @@ Funcionalidade: Gerenciar tarefas
     E a resposta da tarefa deve possuir os campos obrigatórios
     E a resposta da tarefa deve respeitar o contrato "Cadastro de tarefa"
 
+  @regressivo
   Cenário: Cadastrar uma tarefa sem título - POST /api/goals/{goalId}/tasks
     Dado que eu esteja autenticado para gerenciar tarefas
     E que exista uma meta temporária para os testes de tarefas
@@ -35,6 +35,7 @@ Funcionalidade: Gerenciar tarefas
     Então o status da resposta da tarefa deve ser 200
     E a resposta da tarefa deve respeitar o contrato "Listagem de tarefas"
 
+  @smoke
   Cenário: Listar tarefas concluídas - GET /api/goals/{goalId}/tasks?completed=true
     Dado que eu esteja autenticado para gerenciar tarefas
     E que exista uma meta temporária para os testes de tarefas
@@ -42,6 +43,7 @@ Funcionalidade: Gerenciar tarefas
     Quando eu consultar as tarefas concluídas no endpoint "/api/goals"
     Então o status da resposta da tarefa deve ser 200
 
+  @smoke
   Cenário: Listar tarefas pendentes - GET /api/goals/{goalId}/tasks?completed=false
     Dado que eu esteja autenticado para gerenciar tarefas
     E que exista uma meta temporária para os testes de tarefas
@@ -49,6 +51,7 @@ Funcionalidade: Gerenciar tarefas
     Quando eu consultar as tarefas pendentes no endpoint "/api/goals"
     Então o status da resposta da tarefa deve ser 200
 
+  @smoke
   Cenário: Listar tarefas por data - GET /api/goals/{goalId}/tasks?created_at=2026-01-01
     Dado que eu esteja autenticado para gerenciar tarefas
     E que exista uma meta temporária para os testes de tarefas
@@ -56,6 +59,7 @@ Funcionalidade: Gerenciar tarefas
     Quando eu consultar as tarefas criadas a partir de "2026-01-01" no endpoint "/api/goals"
     Então o status da resposta da tarefa deve ser 200
 
+  @smoke
   Cenário: Listar tarefas usando dois filtros - GET /api/goals/{goalId}/tasks?completed=true&created_at=2026-01-01
     Dado que eu esteja autenticado para gerenciar tarefas
     E que exista uma meta temporária para os testes de tarefas
@@ -72,6 +76,7 @@ Funcionalidade: Gerenciar tarefas
     Então o status da resposta da tarefa deve ser 200
     E a resposta da tarefa deve respeitar o contrato "Consulta de uma tarefa"
 
+  @regressivo
   Cenário: Consultar tarefa inexistente - GET /api/goals/{goalId}/tasks/{id}
     Dado que eu esteja autenticado para gerenciar tarefas
     E que exista uma meta temporária para os testes de tarefas

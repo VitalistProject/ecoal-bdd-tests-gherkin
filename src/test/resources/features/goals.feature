@@ -1,4 +1,3 @@
-
 # language: pt
 
 @funcional @regressivo @padrão
@@ -19,6 +18,7 @@ Funcionalidade: Gerenciar metas
     E a resposta da meta deve possuir os campos obrigatórios
     E a resposta da meta deve respeitar o contrato "Cadastro de meta"
 
+  @regressivo
   Cenário: Tentar cadastrar uma meta sem título - POST /api/goals
     Dado que eu esteja autenticado para gerenciar metas
     Quando eu cadastrar uma meta sem informar o título no endpoint "/api/goals"
@@ -31,11 +31,13 @@ Funcionalidade: Gerenciar metas
     Então o status da resposta da meta deve ser 200
     E a resposta da meta deve respeitar o contrato "Listagem de metas"
 
+  @smoke
   Cenário: Listar metas por dimensão - GET /api/goals?dimension=ENVIRONMENTAL
     Dado que eu esteja autenticado para gerenciar metas
     Quando eu consultar as metas da dimensão "ENVIRONMENTAL" no endpoint "/api/goals"
     Então o status da resposta da meta deve ser 200
 
+  @smoke
   Cenário: Listar metas por data de criação - GET /api/goals?created_at=2026-01-01
     Dado que eu esteja autenticado para gerenciar metas
     Quando eu consultar as metas criadas a partir de "2026-01-01" no endpoint "/api/goals"
@@ -49,6 +51,7 @@ Funcionalidade: Gerenciar metas
     Então o status da resposta da meta deve ser 200
     E a resposta da meta deve respeitar o contrato "Consulta de uma meta"
 
+  @regressivo
   Cenário: Consultar uma meta inexistente - GET /api/goals/{id}
     Dado que eu esteja autenticado para gerenciar metas
     Quando eu consultar uma meta inexistente no endpoint "/api/goals"
