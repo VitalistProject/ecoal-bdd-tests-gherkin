@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "score",
+    "global_goal",
+    "percentage"
+  ],
+  "properties": {
+    "score": {
+      "type": "number"
+    },
+    "global_goal": {
+      "type": "number"
+    },
+    "percentage": {
+      "type": "number"
+    }
+  }
+}

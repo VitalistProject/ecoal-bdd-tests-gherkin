@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "departments",
+    "contributions",
+    "energy",
+    "training"
+  ],
+  "properties": {
+    "departments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "user_count"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "user_count": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "contributions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "total_points"],
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "total_points": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "energy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "month",
+          "year",
+          "realized_value",
+          "goal_value"
+        ],
+        "properties": {
+          "month": {
+            "type": "string"
+          },
+          "year": {
+            "type": "integer"
+          },
+          "realized_value": {
+            "type": "number"
+          },
+          "goal_value": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "training": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "quarter",
+          "year",
+          "total_hours"
+        ],
+        "properties": {
+          "quarter": {
+            "type": "string"
+          },
+          "year": {
+            "type": "integer"
+          },
+          "total_hours": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

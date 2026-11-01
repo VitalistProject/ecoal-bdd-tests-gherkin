@@ -1,0 +1,97 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/object1793512647.json",
+  "title": "Root",
+  "type": "object",
+  "required": [
+    "token",
+    "user"
+  ],
+  "properties": {
+    "token": {
+      "$id": "#root/token",
+      "title": "Token",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXRtYXRAZ21haWwuY29tIiwiaWQiOjYsInJvbGUiOiJ1c2VyIiwiY29tcGFueUlkIjoxLCJpYXQiOjE3OTM1MTI2NDMsImV4cCI6MTc5NDExNzQ0M30.A_Zlsipgwf7jlIHV7g8cZZ1SYIrpxm_dHLwXjtQMoF_SE-J7iqKS6RetKKCksg5v7gmvs32YS4stvLCOnWAuKQ"
+      ],
+      "pattern": "^.*$"
+    },
+    "user": {
+      "$id": "#root/user",
+      "title": "User",
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "email",
+        "role",
+        "department",
+        "company_id"
+      ],
+      "properties": {
+        "id": {
+          "$id": "#root/user/id",
+          "title": "Id",
+          "type": "integer",
+          "examples": [
+            6
+          ],
+          "default": 0
+        },
+        "name": {
+          "$id": "#root/user/name",
+          "title": "Name",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "Guilhermino Matheus"
+          ],
+          "pattern": "^.*$"
+        },
+        "email": {
+          "$id": "#root/user/email",
+          "title": "Email",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "matmat@gmail.com"
+          ],
+          "pattern": "^.*$"
+        },
+        "role": {
+          "$id": "#root/user/role",
+          "title": "Role",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "user"
+          ],
+          "pattern": "^.*$"
+        },
+        "department": {
+          "$id": "#root/user/department",
+          "title": "Department",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "Operations"
+          ],
+          "pattern": "^.*$"
+        },
+        "company_id": {
+          "$id": "#root/user/company_id",
+          "title": "Company_id",
+          "type": "integer",
+          "examples": [
+            1
+          ],
+          "default": 0
+        }
+      }
+    }
+
+  }
+}

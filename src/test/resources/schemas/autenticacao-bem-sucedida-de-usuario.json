@@ -1,0 +1,97 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/object1793515504.json",
+  "title": "Root",
+  "type": "object",
+  "required": [
+    "token",
+    "user"
+  ],
+  "properties": {
+    "token": {
+      "$id": "#root/token",
+      "title": "Token",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGljZUBleGFtcGxlLmNvbSIsImlkIjoxLCJyb2xlIjoiYWRtaW4iLCJjb21wYW55SWQiOjEsImlhdCI6MTc5MzUxNTQ5MywiZXhwIjoxNzk0MTIwMjkzfQ.JYWbk6UwcAUVFED4PAEVwo-FVvbRxcgh21IWv2IK_IfdshxEEsc8S9VEapQjWo8lGLmdKYNSBO_lqdvYt7cq8w"
+      ],
+      "pattern": "^.*$"
+    },
+    "user": {
+      "$id": "#root/user",
+      "title": "User",
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "email",
+        "role",
+        "department",
+        "company_id"
+      ],
+      "properties": {
+        "id": {
+          "$id": "#root/user/id",
+          "title": "Id",
+          "type": "integer",
+          "examples": [
+            1
+          ],
+          "default": 0
+        },
+        "name": {
+          "$id": "#root/user/name",
+          "title": "Name",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "Alice"
+          ],
+          "pattern": "^.*$"
+        },
+        "email": {
+          "$id": "#root/user/email",
+          "title": "Email",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "alice@example.com"
+          ],
+          "pattern": "^.*$"
+        },
+        "role": {
+          "$id": "#root/user/role",
+          "title": "Role",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "admin"
+          ],
+          "pattern": "^.*$"
+        },
+        "department": {
+          "$id": "#root/user/department",
+          "title": "Department",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "Engineering"
+          ],
+          "pattern": "^.*$"
+        },
+        "company_id": {
+          "$id": "#root/user/company_id",
+          "title": "Company_id",
+          "type": "integer",
+          "examples": [
+            1
+          ],
+          "default": 0
+        }
+      }
+    }
+
+  }
+}
