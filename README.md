@@ -21,6 +21,8 @@ java -version
 mvn -version
 ```
 
+---
+
 ## 2. API testada
 
 **Importante:** a API que será testada precisa estar em execução localmente antes de iniciar os testes automatizados.
@@ -39,11 +41,27 @@ O código-fonte da API está disponível no seguinte repositório:
 
 Consulte o README do repositório para obter as instruções de instalação, configuração e inicialização da aplicação.
 
+---
+
 ## 3. Como executar os testes
 
 Existem duas maneiras de executar os testes automatizados:
 
-### Opção 1: Pelo arquivo BAT (Windows)
+### Opção 1: Pelo terminal
+
+1. Certifique-se de que a API esteja em execução localmente.
+2. Abra um terminal na pasta raiz do projeto, onde está localizado o arquivo `pom.xml`.
+3. Execute o seguinte comando:
+
+```bash
+mvn clean test
+```
+
+---
+
+O Maven realizará a limpeza dos arquivos de compilação anteriores, compilará o projeto e executará os testes automatizados.
+
+### Opção 2: Pelo arquivo BAT (Windows)
 
 1. Certifique-se de que a API esteja em execução localmente.
 2. Acesse a pasta `scripts` do projeto.
@@ -56,7 +74,9 @@ O script executará automaticamente o comando:
 mvn clean test
 ```
 
-### Opção 2: Pelo arquivo SH (Linux)
+---
+
+### Opção 3: Pelo arquivo SH (Linux)
 
 1. Certifique-se de que a API esteja em execução localmente.
 2. Acesse a pasta `scripts` do projeto.
@@ -79,18 +99,6 @@ O script executará automaticamente o comando:
 ```bash
 mvn clean test
 ```
-
-### Opção 3: Pelo terminal
-
-1. Certifique-se de que a API esteja em execução localmente.
-2. Abra um terminal na pasta raiz do projeto, onde está localizado o arquivo `pom.xml`.
-3. Execute o seguinte comando:
-
-```bash
-mvn clean test
-```
-
-O Maven realizará a limpeza dos arquivos de compilação anteriores, compilará o projeto e executará os testes automatizados.
 
 ---
 
