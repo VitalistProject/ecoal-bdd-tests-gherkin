@@ -11,7 +11,6 @@ import services.AuthService;
 import services.GoalService;
 
 import io.cucumber.java.After;
-import java.util.List;
 
 import java.io.IOException;
 import java.util.Map;
@@ -27,7 +26,6 @@ public class GoalSteps {
 
     @Dado("que eu esteja autenticado para gerenciar metas")
     public void autenticarParaGerenciarMetas() {
-
         Map<String, String> credentials = Map.of(
                 "email", "bob@example.com",
                 "password", "password"
@@ -47,10 +45,8 @@ public class GoalSteps {
         goalService.setToken(token);
     }
 
-    // CADASTRAR META
     @Quando("eu cadastrar uma meta com os seguintes dados no endpoint {string}:")
     public void cadastrarMeta(String endpoint, DataTable dataTable) {
-
         Map<String, String> data =
                 dataTable.asMap(String.class, String.class);
 
@@ -69,7 +65,6 @@ public class GoalSteps {
 
     @Quando("eu cadastrar uma meta sem informar o título no endpoint {string}")
     public void cadastrarMetaSemTitulo(String endpoint) {
-
         goalService.createGoal(
                 endpoint,
                 "",
@@ -78,11 +73,8 @@ public class GoalSteps {
         );
     }
 
-    // LISTAR METAS
-
     @Quando("eu consultar a lista de metas no endpoint {string}")
     public void consultarListaDeMetas(String endpoint) {
-
         goalService.getGoals(endpoint);
     }
 
@@ -90,7 +82,6 @@ public class GoalSteps {
     public void consultarMetasPorDimensao(
             String dimension,
             String endpoint) {
-
         goalService.getGoalsByDimension(
                 endpoint,
                 dimension
@@ -101,17 +92,14 @@ public class GoalSteps {
     public void consultarMetasPorData(
             String createdAt,
             String endpoint) {
-
         goalService.getGoalsByDate(
                 endpoint,
                 createdAt
         );
     }
 
-    // CONSULTAR META
     @Dado("que exista uma meta cadastrada")
     public void queExistaUmaMetaCadastrada() {
-
         String titulo = "Meta BDD " + java.util.UUID.randomUUID();
 
         goalService.createGoal(
@@ -133,21 +121,16 @@ public class GoalSteps {
 
     @Quando("eu consultar essa meta no endpoint {string}")
     public void consultarEssaMeta(String endpoint) {
-
         goalService.getGoal(endpoint, goalId);
     }
 
     @Quando("eu consultar uma meta inexistente no endpoint {string}")
     public void consultarMetaInexistente(String endpoint) {
-
         goalService.getGoal(endpoint, 999999L);
     }
 
-    // ATUALIZAR META
-
     @Quando("eu atualizar essa meta no endpoint {string}")
     public void atualizarEssaMeta(String endpoint) {
-
         goalService.updateGoal(
                 endpoint,
                 goalId,
@@ -157,19 +140,13 @@ public class GoalSteps {
         );
     }
 
-    // EXCLUIR META
-
     @Quando("eu excluir essa meta no endpoint {string}")
     public void excluirEssaMeta(String endpoint) {
-
         goalService.deleteGoal(endpoint, goalId);
     }
 
-    // VALIDAÇÕES
-
     @Então("o status da resposta da meta deve ser {int}")
     public void verificarStatusRespostaMeta(int statusCode) {
-
         Assert.assertNotNull(
                 "Nenhuma resposta foi recebida da API de metas",
                 goalService.response
@@ -233,7 +210,6 @@ public class GoalSteps {
 
     @Então("a resposta da meta não deve possuir conteúdo")
     public void verificarRespostaSemConteudo() {
-
         Assert.assertEquals(
                 "A resposta deveria estar vazia",
                 "",

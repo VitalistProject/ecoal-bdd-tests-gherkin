@@ -40,7 +40,6 @@ public class AuthService {
 
     private JSONObject jsonSchema;
 
-    // Retorna o token armazenado
     @Getter
     private String token;
 
@@ -54,11 +53,8 @@ public class AuthService {
         }
     }
 
-    // Seleciona o contrato esperado
     public void setContract(String contract) throws IOException {
-
         switch (contract) {
-
             case "Cadastro bem-sucedido de usuario" ->
                     jsonSchema = loadJsonFromFile(
                             schemasPath + "cadastro-bem-sucedido-de-usuario.json"
@@ -80,9 +76,7 @@ public class AuthService {
         }
     }
 
-    // Valida a resposta contra o contrato selecionado
     public Set<ValidationMessage> validateResponseAgainstSchema() throws IOException {
-
         JSONObject jsonResponse = new JSONObject(response.getBody().asString());
 
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(
@@ -96,14 +90,11 @@ public class AuthService {
         return schema.validate(jsonResponseNode);
     }
 
-    // Limpa os dados de cadastro antes de cada cenário
     public void resetUsuario() {
         usuarioModel = new UsuarioModel();
     }
 
-    // Preenche os dados de cadastro
     public void setFieldsUsuario(String field, String value) {
-
         switch (field) {
             case "name" -> usuarioModel.setName(value);
             case "email" -> usuarioModel.setEmail(value);
@@ -118,9 +109,7 @@ public class AuthService {
         }
     }
 
-    // Envia requisição POST de cadastro
     public void createUsuario(String endPoint) {
-
         String url = baseUrl + endPoint;
         String bodyToSend = gson.toJson(usuarioModel);
 
@@ -139,9 +128,7 @@ public class AuthService {
         }
     }
 
-    // Envia requisição POST de login
     public void signIn(String endPoint, Map<String, String> loginData) {
-
         String url = baseUrl + endPoint;
 
         String bodyToSend = gson.toJson(loginData);
@@ -162,12 +149,10 @@ public class AuthService {
         }
     }
 
-    // Limpa o token armazenado
     public void clearToken() {
         token = null;
     }
 
-    // Consulta os dados do usuário autenticado
     public void getMe(String endPoint, String authToken) {
 
         String url = baseUrl + endPoint;

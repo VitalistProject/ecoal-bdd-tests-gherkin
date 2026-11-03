@@ -25,7 +25,6 @@ public class TaskSteps {
 
     @Dado("que eu esteja autenticado para gerenciar tarefas")
     public void autenticarParaGerenciarTarefas() {
-
         Map<String, String> credentials = Map.of(
                 "email", "bob@example.com",
                 "password", "password"
@@ -45,7 +44,6 @@ public class TaskSteps {
 
     @Dado("que exista uma meta temporária para os testes de tarefas")
     public void criarMetaTemporaria() {
-
         goalId = taskService.createGoalFixture();
 
         Assert.assertNotNull(
@@ -56,7 +54,6 @@ public class TaskSteps {
 
     @Dado("que exista uma tarefa cadastrada nessa meta")
     public void criarTarefaTemporaria() {
-
         taskService.createTask(
                 "/api/goals",
                 goalId,
@@ -77,7 +74,6 @@ public class TaskSteps {
 
     @Quando("eu cadastrar uma tarefa no endpoint {string} com os seguintes dados:")
     public void cadastrarTarefa(String endpoint, DataTable dataTable) {
-
         Map<String, String> data =
                 dataTable.asMap(String.class, String.class);
 
@@ -96,7 +92,6 @@ public class TaskSteps {
 
     @Quando("eu cadastrar uma tarefa sem título no endpoint {string}")
     public void cadastrarTarefaSemTitulo(String endpoint) {
-
         taskService.createTask(
                 endpoint,
                 goalId,
@@ -143,7 +138,6 @@ public class TaskSteps {
 
     @Quando("eu atualizar essa tarefa no endpoint {string}")
     public void atualizarTarefa(String endpoint) {
-
         taskService.updateTask(
                 endpoint,
                 goalId,
@@ -162,7 +156,6 @@ public class TaskSteps {
 
     @Então("o status da resposta da tarefa deve ser {int}")
     public void verificarStatus(int statusCode) {
-
         Assert.assertNotNull(
                 "Nenhuma resposta foi recebida da API de tarefas",
                 taskService.response
@@ -178,7 +171,6 @@ public class TaskSteps {
 
     @Então("a resposta da tarefa deve possuir os campos obrigatórios")
     public void verificarCamposObrigatorios() {
-
         Assert.assertNotNull(
                 taskService.response.jsonPath().get("id")
         );
@@ -206,7 +198,6 @@ public class TaskSteps {
 
     @Então("a resposta da tarefa deve respeitar o contrato {string}")
     public void validarContrato(String contrato) throws IOException {
-
         taskService.setContract(contrato);
 
         Set<ValidationMessage> erros =
@@ -220,7 +211,6 @@ public class TaskSteps {
 
     @Então("a resposta da tarefa não deve possuir conteúdo")
     public void verificarRespostaVazia() {
-
         Assert.assertEquals(
                 "",
                 taskService.response.getBody().asString()
@@ -229,7 +219,6 @@ public class TaskSteps {
 
     @After
     public void limparDadosTemporarios() {
-
         // Exclui a tarefa temporária, se ela existir.
         if (goalId != null && taskId != null) {
             taskService.deleteTask("/api/goals", goalId, taskId);

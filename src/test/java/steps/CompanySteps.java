@@ -31,13 +31,8 @@ public class CompanySteps {
         return String.valueOf(numero);
     }
 
-    // =========================
-    // AUTENTICAÇÃO
-    // =========================
-
     @Dado("que eu esteja autenticado para gerenciar empresas")
     public void autenticarParaGerenciarEmpresas() {
-
         Map<String, String> credentials = Map.of(
                 "email", "bob@example.com",
                 "password", "password"
@@ -61,13 +56,8 @@ public class CompanySteps {
         companyService.setToken(token);
     }
 
-    // =========================
-    // CADASTRO
-    // =========================
-
     @Quando("eu cadastrar uma empresa com os seguintes dados:")
     public void cadastrarEmpresa(DataTable dataTable) {
-
         Map<String, String> data = dataTable.asMap(
                 String.class,
                 String.class
@@ -91,7 +81,6 @@ public class CompanySteps {
 
     @Quando("eu cadastrar uma empresa sem informar o nome")
     public void cadastrarEmpresaSemNome() {
-
         companyService.createCompany(
                 COMPANY_ENDPOINT,
                 "",
@@ -100,13 +89,8 @@ public class CompanySteps {
         );
     }
 
-    // =========================
-    // CONSULTA
-    // =========================
-
     @Dado("que exista uma empresa cadastrada")
     public void queExistaUmaEmpresaCadastrada() {
-
         // Cria uma empresa exclusiva para o cenário
         String cnpj = gerarCnpjUnico();
 
@@ -165,20 +149,14 @@ public class CompanySteps {
 
     @Quando("eu consultar a empresa com ID inexistente")
     public void consultarEmpresaInexistente() {
-
         companyService.getCompany(
                 COMPANY_ENDPOINT,
                 999999L
         );
     }
 
-    // =========================
-    // ATUALIZAÇÃO
-    // =========================
-
     @Quando("eu atualizar os dados dessa empresa")
     public void atualizarDadosDaEmpresa() {
-
         companyService.updateCompany(
                 COMPANY_ENDPOINT,
                 companyId,
@@ -190,7 +168,6 @@ public class CompanySteps {
 
     @Quando("eu atualizar essa empresa utilizando um CNPJ já cadastrado")
     public void atualizarEmpresaComCnpjJaCadastrado() {
-
         String cnpjDuplicado = gerarCnpjUnico();
 
         // Cria uma segunda empresa para provocar o conflito.
@@ -217,26 +194,16 @@ public class CompanySteps {
         );
     }
 
-    // =========================
-    // EXCLUSÃO
-    // =========================
-
     @Quando("eu excluir essa empresa")
     public void excluirEssaEmpresa() {
-
         companyService.deleteCompany(
                 COMPANY_ENDPOINT,
                 companyId
         );
     }
 
-    // =========================
-    // VALIDAÇÃO DE STATUS
-    // =========================
-
     @Então("o status da resposta da empresa deve ser {int}")
     public void verificarStatusRespostaEmpresa(int statusCode) {
-
         Assert.assertNotNull(
                 "Nenhuma resposta foi recebida da API de empresas",
                 companyService.response
@@ -249,13 +216,8 @@ public class CompanySteps {
         );
     }
 
-    // =========================
-    // VALIDAÇÃO DOS CAMPOS
-    // =========================
-
     @Então("a resposta da empresa deve possuir os campos obrigatórios")
     public void verificarCamposObrigatorios() {
-
         Assert.assertNotNull(
                 "O ID da empresa não foi retornado",
                 companyService.response.jsonPath().get("id")
@@ -282,13 +244,8 @@ public class CompanySteps {
         );
     }
 
-    // =========================
-    // RESPOSTA SEM CONTEÚDO
-    // =========================
-
     @Então("a resposta da empresa não deve possuir conteúdo")
     public void verificarRespostaSemConteudo() {
-
         Assert.assertNotNull(
                 "Nenhuma resposta foi recebida da API",
                 companyService.response

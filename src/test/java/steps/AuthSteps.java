@@ -2,7 +2,6 @@ package steps;
 
 import com.networknt.schema.ValidationMessage;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Então;
@@ -42,7 +41,6 @@ public class AuthSteps {
 
     @Dado("que o usuário já esteja cadastrado")
     public void queOUsuarioJaEstejaCadastrado() {
-
         authService.createUsuario("/api/auth/sign-up");
 
         Assert.assertEquals(
@@ -94,7 +92,6 @@ public class AuthSteps {
         Assert.assertTrue("O contrato está inválido. Erros encontrados: " + validateResponse, validateResponse.isEmpty());
     }
 
-    // Recebe os dados de login da tabela Gherkin
     @Dado("que eu tenha os seguintes dados de login:")
     public void queEuTenhaOsSeguintesDadosDeLogin(DataTable dataTable) {
         loginData = new java.util.HashMap<>();
@@ -104,13 +101,11 @@ public class AuthSteps {
         }
     }
 
-    // Envia a requisição POST de login
     @Quando("eu enviar a requisição POST para o endpoint {string} de autenticação de usuários")
     public void euEnviarARequisiçãoPOSTParaOEndpointDeAutenticaçãoDeUsuários(String endPoint) {
         authService.signIn(endPoint, loginData);
     }
 
-    // Realiza login para obter um JWT válido
     @Dado("que eu esteja autenticado no sistema")
     public void queEuEstejaAutenticadoNoSistema() {
 
@@ -128,19 +123,16 @@ public class AuthSteps {
         Assert.assertNotNull("O token JWT não foi retornado", authToken);
     }
 
-    // Envia a requisição GET de consulta do usuário
     @Quando("eu enviar a requisição GET para o endpoint {string} de consulta dos dados do usuário")
     public void euEnviarARequisiçãoGETParaOEndpointDeConsultaDosDadosDoUsuário(String endPoint) {
         authService.getMe(endPoint, authToken);
     }
 
-    // Garante que a requisição será enviada sem autenticação
     @Dado("que eu não esteja autenticado no sistema")
     public void queEuNãoEstejaAutenticadoNoSistema() {
         authToken = null;
     }
 
-    // Define um token inválido para a requisição
     @Dado("que eu esteja utilizando um token de autenticação inválido")
     public void queEuEstejaUtilizandoUmTokenDeAutenticaçãoInválido() {
         authToken = "token-invalido";

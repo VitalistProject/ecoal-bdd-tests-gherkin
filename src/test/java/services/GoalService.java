@@ -49,9 +49,7 @@ public class GoalService {
     }
 
     public void setContract(String contract) throws IOException {
-
         switch (contract) {
-
             case "Consulta de uma meta", "Cadastro de meta", "Atualização de meta":
                 jsonSchema = loadJsonFromFile(
                         schemasPath + "meta.json"
@@ -128,7 +126,6 @@ public class GoalService {
     }
 
     public void getGoals(String endPoint) {
-
         response = given()
                 .baseUri(baseUrl)
                 .accept(ContentType.JSON)
@@ -173,7 +170,6 @@ public class GoalService {
     }
 
     public void getGoal(String endPoint, Long id) {
-
         response = given()
                 .baseUri(baseUrl)
                 .accept(ContentType.JSON)
@@ -214,7 +210,6 @@ public class GoalService {
     }
 
     public void deleteGoal(String endPoint, Long id) {
-
         response = given()
                 .baseUri(baseUrl)
                 .header("Authorization", "Bearer " + token)

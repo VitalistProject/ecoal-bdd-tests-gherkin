@@ -61,7 +61,6 @@ public class TaskService {
     }
 
     public Set<ValidationMessage> validateResponseAgainstSchema() throws IOException {
-
         JsonSchemaFactory schemaFactory =
                 JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
 
@@ -75,7 +74,6 @@ public class TaskService {
 
 
     public Long createGoalFixture() {
-
         response = given()
                 .baseUri(baseUrl)
                 .header("Authorization", "Bearer " + token)
@@ -153,7 +151,6 @@ public class TaskService {
             String description,
             String score
     ) {
-
         Map<String, Object> taskData = Map.of(
                 "title", title,
                 "description", description,
@@ -170,7 +167,6 @@ public class TaskService {
     }
 
     public void getTasks(String endpoint, Long goalId) {
-
         response = given()
                 .baseUri(baseUrl)
                 .header("Authorization", "Bearer " + token)
@@ -197,7 +193,6 @@ public class TaskService {
             Long goalId,
             String createdAt
     ) {
-
         response = given()
                 .baseUri(baseUrl)
                 .header("Authorization", "Bearer " + token)
@@ -212,7 +207,6 @@ public class TaskService {
             Boolean completed,
             String createdAt
     ) {
-
         response = given()
                 .baseUri(baseUrl)
                 .header("Authorization", "Bearer " + token)
@@ -223,7 +217,6 @@ public class TaskService {
     }
 
     public void getTask(String endpoint, Long goalId, Long taskId) {
-
         response = given()
                 .baseUri(baseUrl)
                 .header("Authorization", "Bearer " + token)
