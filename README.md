@@ -4,6 +4,96 @@
 
 ---
 
+## 1. Pré-requisitos
+
+Para executar os testes automatizados, é necessário ter instalado:
+
+- **Java JDK 21:** necessário para compilação e execução dos testes.
+- **Apache Maven 3.10.0 ou superior:** utilizado para gerenciamento de dependências e execução dos testes.
+- **Docker e Docker Compose:** necessários caso sejam utilizados para inicializar a API e seus serviços.
+
+A variável de ambiente `JAVA_HOME` deve estar configurada apontando para a instalação do JDK 21.
+
+Para verificar as instalações, execute:
+
+```bash
+java -version
+mvn -version
+```
+
+## 2. API testada
+
+**Importante:** a API que será testada precisa estar em execução localmente antes de iniciar os testes automatizados.
+
+O projeto está configurado para realizar requisições ao seguinte endereço:
+
+```text
+http://localhost:8080
+```
+
+Certifique-se de que a API esteja inicializada e acessível nessa porta.
+
+O código-fonte da API está disponível no seguinte repositório:
+
+**Repositório da API:** https://github.com/VitalistProject/esg-ecoai-java
+
+Consulte o README do repositório para obter as instruções de instalação, configuração e inicialização da aplicação.
+
+## 3. Como executar os testes
+
+Existem duas maneiras de executar os testes automatizados:
+
+### Opção 1: Pelo arquivo BAT (Windows)
+
+1. Certifique-se de que a API esteja em execução localmente.
+2. Acesse a pasta `scripts` do projeto.
+3. Execute o arquivo `run-tests.bat`.
+4. Aguarde a conclusão da compilação e execução dos testes.
+
+O script executará automaticamente o comando:
+
+```bash
+mvn clean test
+```
+
+### Opção 2: Pelo arquivo SH (Linux)
+
+1. Certifique-se de que a API esteja em execução localmente.
+2. Acesse a pasta `scripts` do projeto.
+3. Dê permissão de execução ao arquivo `run-tests.sh` com o comando:
+
+   ```bash
+   chmod +x run-tests.sh
+   ```
+
+4. Execute o script:
+
+   ```bash
+   ./run-tests.sh
+   ```
+
+5. Aguarde a conclusão da compilação e execução dos testes.
+
+O script executará automaticamente o comando:
+
+```bash
+mvn clean test
+```
+
+### Opção 3: Pelo terminal
+
+1. Certifique-se de que a API esteja em execução localmente.
+2. Abra um terminal na pasta raiz do projeto, onde está localizado o arquivo `pom.xml`.
+3. Execute o seguinte comando:
+
+```bash
+mvn clean test
+```
+
+O Maven realizará a limpeza dos arquivos de compilação anteriores, compilará o projeto e executará os testes automatizados.
+
+---
+
 **Credenciais dos testes:**
 
 | E-mail | Senha | Usado em |
@@ -15,7 +105,7 @@ O CNPJ `12345678000100` precisa estar cadastrado no banco como empresa de refer�
 
 ---
 
-## Arquitetura dos testes
+## 4. Arquitetura dos testes
 
 O projeto segue o padrão **Service Layer**: os Step Definitions nunca fazem chamadas HTTP diretamente — delegam para classes de serviço dedicadas. Isso mantém os steps legíveis e a lógica HTTP centralizada.
 
@@ -40,7 +130,7 @@ O projeto segue o padrão **Service Layer**: os Step Definitions nunca fazem cha
 
 ---
 
-## Testes
+## 5. Testes
 
 ### auth.feature — Autenticação e Acesso
 
@@ -70,10 +160,6 @@ Cenário: Cadastro bem-sucedido de usuário - POST /api/auth/sign-up
   Então o status code da resposta deve ser 201
 ```
 
-> **Print de execução:**
->
-> _Adicionar print aqui_
-
 ---
 
 **Login — `POST /api/auth/sign-in`**
@@ -98,10 +184,6 @@ Cenário: Login bem-sucedido de usuário - POST /api/auth/sign-in
   Então o status code da resposta deve ser 200
 ```
 
-> **Print de execução:**
->
-> _Adicionar print aqui_
-
 ---
 
 **Consulta do usuário autenticado — `GET /api/auth/me`**
@@ -121,10 +203,6 @@ Cenário: Consultar dados do usuário autenticado com sucesso - GET /api/auth/me
   Quando eu enviar a requisição GET para o endpoint "/api/auth/me" de consulta dos dados do usuário
   Então o status code da resposta deve ser 200
 ```
-
-> **Print de execução:**
->
-> _Adicionar print aqui_
 
 ---
 
@@ -159,10 +237,6 @@ Cenário: Consultar uma empresa inexistente - GET /api/companies/{id}
   Quando eu consultar a empresa com ID inexistente
   Então o status da resposta da empresa deve ser 404
 ```
-
-> **Print de execução:**
->
-> _Adicionar print aqui_
 
 ---
 
@@ -210,10 +284,6 @@ Cenário: Excluir uma meta cadastrada - DELETE /api/goals/{id}
   E a resposta da meta não deve possuir conteúdo
 ```
 
-> **Print de execução:**
->
-> _Adicionar print aqui_
-
 ---
 
 ### tasks.feature — Tarefas
@@ -256,10 +326,6 @@ Cenário: Listar tarefas usando dois filtros - GET /api/goals/{goalId}/tasks?com
   Então o status da resposta da tarefa deve ser 200
 ```
 
-> **Print de execução:**
->
-> _Adicionar print aqui_
-
 ---
 
 ### analytics.feature — Analytics ESG
@@ -290,13 +356,9 @@ Cenário: Validar contrato da consulta do dashboard - GET /api/analytics/dashboa
   E a resposta deve atender ao contrato "Consulta dos dados do dashboard"
 ```
 
-> **Print de execução:**
->
-> _Adicionar print aqui_
-
 ---
 
-## Contratos JSON Schema
+## 6. Contratos JSON Schema
 
 Cada contrato define a estrutura obrigatória da resposta da API. A validação usa `networknt json-schema-validator` — se qualquer campo obrigatório estiver ausente ou com tipo incorreto, o teste falha com a mensagem de violação.
 
@@ -315,7 +377,7 @@ Cada contrato define a estrutura obrigatória da resposta da API. A validação 
 
 ---
 
-## Tecnologias utilizadas
+## 7. Tecnologias utilizadas
 
 | Tecnologia | Versão | Finalidade |
 |---|---|---|

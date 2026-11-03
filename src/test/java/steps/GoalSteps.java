@@ -224,10 +224,12 @@ public class GoalSteps {
             goalService.deleteGoal("/api/goals", goalId);
 
             if (goalService.response.statusCode() != 204) {
+                /*
                 System.out.println(
                         "AVISO: Não foi possível excluir a meta temporária. Status: "
                                 + goalService.response.statusCode()
                 );
+                */
             }
         }
     }
