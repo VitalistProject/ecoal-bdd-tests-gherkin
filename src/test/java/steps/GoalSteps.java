@@ -10,32 +10,32 @@ import org.junit.Assert;
 import services.AuthService;
 import services.GoalService;
 
+import io.cucumber.java.After;
+import java.util.List;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
 public class GoalSteps {
-
     private final AuthService authService = new AuthService();
     private final GoalService goalService = new GoalService();
 
-    private Long goalId = 1L;
+    private boolean createdGoalInScenario = false;
+
+    private Long goalId;
 
     @Dado("que eu esteja autenticado para gerenciar metas")
     public void autenticarParaGerenciarMetas() {
 
         Map<String, String> credentials = Map.of(
-                "email", "alice@example.com",
+                "email", "bob@example.com",
                 "password", "password"
         );
-
         authService.signIn("/api/auth/sign-in", credentials);
 
-        Assert.assertEquals(
-                "Não foi possível autenticar o usuário",
-                200,
-                authService.response.statusCode()
-        );
+        Assert.assertEquals("Não foi possível autenticar o usuário",
+                200, authService.response.statusCode());
 
         String token = authService.getToken();
 
@@ -48,11 +48,8 @@ public class GoalSteps {
     }
 
     // CADASTRAR META
-
     @Quando("eu cadastrar uma meta com os seguintes dados no endpoint {string}:")
-    public void cadastrarMeta(
-            String endpoint,
-            DataTable dataTable) {
+    public void cadastrarMeta(String endpoint, DataTable dataTable) {
 
         Map<String, String> data =
                 dataTable.asMap(String.class, String.class);
@@ -66,6 +63,7 @@ public class GoalSteps {
 
         if (goalService.response.statusCode() == 201) {
             goalId = goalService.response.jsonPath().getLong("id");
+            createdGoalInScenario = true;
         }
     }
 
@@ -111,18 +109,26 @@ public class GoalSteps {
     }
 
     // CONSULTAR META
-
     @Dado("que exista uma meta cadastrada")
     public void queExistaUmaMetaCadastrada() {
 
-        goalService.getGoal("/api/goals", goalId);
+        String titulo = "Meta BDD " + java.util.UUID.randomUUID();
+
+        goalService.createGoal(
+                "/api/goals",
+                titulo,
+                "Meta temporária criada para teste automatizado",
+                "SOCIAL"
+        );
 
         Assert.assertEquals(
-                "A meta de referência não foi encontrada. "
-                        + "Verifique se o ID pertence à empresa autenticada.",
-                200,
+                "Não foi possível criar a meta temporária",
+                201,
                 goalService.response.statusCode()
         );
+
+        goalId = goalService.response.jsonPath().getLong("id");
+        createdGoalInScenario = true;
     }
 
     @Quando("eu consultar essa meta no endpoint {string}")
@@ -233,5 +239,20 @@ public class GoalSteps {
                 "",
                 goalService.response.getBody().asString()
         );
+    }
+
+    @After
+    public void limparMetaCriadaPeloTeste() {
+        if (createdGoalInScenario && goalId != null) {
+
+            goalService.deleteGoal("/api/goals", goalId);
+
+            if (goalService.response.statusCode() != 204) {
+                System.out.println(
+                        "AVISO: Não foi possível excluir a meta temporária. Status: "
+                                + goalService.response.statusCode()
+                );
+            }
+        }
     }
 }

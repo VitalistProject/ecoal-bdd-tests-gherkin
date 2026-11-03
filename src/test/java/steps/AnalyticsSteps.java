@@ -19,9 +19,8 @@ public class AnalyticsSteps {
 
     @io.cucumber.java.pt.Dado("que eu esteja autenticado para consultar os dados analíticos")
     public void autenticarParaConsultarDadosAnaliticos() {
-
         Map<String, String> credentials = Map.of(
-                "email", "guilhermino@gmail.com",
+                "email", "bob@example.com",
                 "password", "password"
         );
 

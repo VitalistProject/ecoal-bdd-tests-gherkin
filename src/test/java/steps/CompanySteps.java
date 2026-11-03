@@ -6,6 +6,8 @@ import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Quando;
 import io.cucumber.java.pt.Então;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.junit.Assert;
 
 import services.AuthService;
@@ -20,7 +22,14 @@ public class CompanySteps {
 
     private static final String COMPANY_ENDPOINT = "/api/companies";
 
-    private Long companyId = 1L;
+    private Long companyId;
+
+    private String gerarCnpjUnico() {
+        long numero = ThreadLocalRandom.current()
+                .nextLong(10_000_000_000_000L, 99_999_999_999_999L);
+
+        return String.valueOf(numero);
+    }
 
     // =========================
     // AUTENTICAÇÃO
@@ -30,7 +39,7 @@ public class CompanySteps {
     public void autenticarParaGerenciarEmpresas() {
 
         Map<String, String> credentials = Map.of(
-                "email", "alice@example.com",
+                "email", "bob@example.com",
                 "password", "password"
         );
 
@@ -71,7 +80,7 @@ public class CompanySteps {
         companyService.createCompany(
                 COMPANY_ENDPOINT,
                 data.get("name"),
-                data.get("cnpj"),
+                gerarCnpjUnico(),
                 globalScoreGoal
         );
 
@@ -86,7 +95,7 @@ public class CompanySteps {
         companyService.createCompany(
                 COMPANY_ENDPOINT,
                 "",
-                "98765432000199",
+                gerarCnpjUnico(),
                 80.0
         );
     }
@@ -98,25 +107,60 @@ public class CompanySteps {
     @Dado("que exista uma empresa cadastrada")
     public void queExistaUmaEmpresaCadastrada() {
 
-        companyService.getCompany(
+        // Cria uma empresa exclusiva para o cenário
+        String cnpj = gerarCnpjUnico();
+
+        companyService.createCompany(
                 COMPANY_ENDPOINT,
-                companyId
+                "Empresa BDD Temporaria",
+                cnpj,
+                80.0
         );
 
         Assert.assertEquals(
-                "A empresa de referência não foi encontrada ou não está acessível",
-                200,
+                "Não foi possível criar a empresa temporária",
+                201,
                 companyService.response.statusCode()
         );
+
+        companyId = companyService.response.jsonPath().getLong("id");
+
+        // Prepara o cadastro de um usuário vinculado à empresa
+        authService.resetUsuario();
+
+        authService.setFieldsUsuario("name", "Usuario BDD");
+        authService.setFieldsUsuario(
+                "email",
+                "bdd." + java.util.UUID.randomUUID() + "@example.com"
+        );
+        authService.setFieldsUsuario("password", "password");
+        authService.setFieldsUsuario("role", "admin");
+        authService.setFieldsUsuario("company_cnpj", cnpj);
+        authService.setFieldsUsuario("department", "Testing");
+
+        // Cadastra o usuário
+        authService.createUsuario("/api/auth/sign-up");
+
+        Assert.assertEquals(
+                "Não foi possível cadastrar o usuário temporário",
+                201,
+                authService.response.statusCode()
+        );
+
+        // Utiliza o token do usuário vinculado à empresa temporária
+        String token = authService.getToken();
+
+        Assert.assertNotNull(
+                "O token JWT do usuário temporário não foi retornado",
+                token
+        );
+
+        companyService.setToken(token);
     }
 
     @Quando("eu consultar essa empresa")
-    public void consultarEssaEmpresa() {
-
-        companyService.getCompany(
-                COMPANY_ENDPOINT,
-                companyId
-        );
+    public void euConsultarEssaEmpresa() {
+        companyService.getCompany(COMPANY_ENDPOINT, companyId);
     }
 
     @Quando("eu consultar a empresa com ID inexistente")
@@ -139,7 +183,7 @@ public class CompanySteps {
                 COMPANY_ENDPOINT,
                 companyId,
                 "Empresa BDD Atualizada",
-                "98765432000199",
+                gerarCnpjUnico(),
                 90.0
         );
     }
@@ -147,11 +191,28 @@ public class CompanySteps {
     @Quando("eu atualizar essa empresa utilizando um CNPJ já cadastrado")
     public void atualizarEmpresaComCnpjJaCadastrado() {
 
+        String cnpjDuplicado = gerarCnpjUnico();
+
+        // Cria uma segunda empresa para provocar o conflito.
+        companyService.createCompany(
+                COMPANY_ENDPOINT,
+                "Empresa BDD Conflito",
+                cnpjDuplicado,
+                80.0
+        );
+
+        Assert.assertEquals(
+                "Não foi possível criar a empresa necessária para o teste de conflito",
+                201,
+                companyService.response.statusCode()
+        );
+
+        // Tenta utilizar o CNPJ da segunda empresa na empresa original.
         companyService.updateCompany(
                 COMPANY_ENDPOINT,
                 companyId,
                 "Empresa BDD Atualizada",
-                "12345678000195",
+                cnpjDuplicado,
                 90.0
         );
     }

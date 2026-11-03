@@ -3,6 +3,7 @@ package steps;
 
 import com.networknt.schema.ValidationMessage;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.After;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Quando;
 import io.cucumber.java.pt.Então;
@@ -26,17 +27,14 @@ public class TaskSteps {
     public void autenticarParaGerenciarTarefas() {
 
         Map<String, String> credentials = Map.of(
-                "email", "alice@example.com",
+                "email", "bob@example.com",
                 "password", "password"
         );
 
         authService.signIn("/api/auth/sign-in", credentials);
 
-        Assert.assertEquals(
-                "Não foi possível autenticar o usuário",
-                200,
-                authService.response.statusCode()
-        );
+        Assert.assertEquals("Não foi possível autenticar o usuário",
+                200, authService.response.statusCode());
 
         String token = authService.getToken();
 
@@ -227,5 +225,38 @@ public class TaskSteps {
                 "",
                 taskService.response.getBody().asString()
         );
+    }
+
+    @After
+    public void limparDadosTemporarios() {
+
+        // Exclui a tarefa temporária, se ela existir.
+        if (goalId != null && taskId != null) {
+            taskService.deleteTask("/api/goals", goalId, taskId);
+
+            if (taskService.response.statusCode() != 204
+                    && taskService.response.statusCode() != 404) {
+
+                System.out.println(
+                        "AVISO: Não foi possível excluir a tarefa. Status: "
+                                + taskService.response.statusCode()
+                );
+            }
+        }
+
+        // Exclui a meta temporária.
+        if (goalId != null) {
+
+            taskService.deleteGoal("/api/goals", goalId);
+
+            if (taskService.response.statusCode() != 204
+                    && taskService.response.statusCode() != 404) {
+
+                System.out.println(
+                        "AVISO: Não foi possível excluir a meta. Status: "
+                                + taskService.response.statusCode()
+                );
+            }
+        }
     }
 }

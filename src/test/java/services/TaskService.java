@@ -76,7 +76,6 @@ public class TaskService {
 
     public Long createGoalFixture() {
 
-        // Busca as metas da empresa autenticada.
         response = given()
                 .baseUri(baseUrl)
                 .header("Authorization", "Bearer " + token)
@@ -89,39 +88,60 @@ public class TaskService {
             );
         }
 
-        java.util.List<Integer> goalIds =
-                response.jsonPath().getList("id", Integer.class);
+        java.util.List<Map<String, Object>> goals =
+                response.jsonPath().getList("$");
 
-        if (goalIds == null || goalIds.isEmpty()) {
-            throw new AssertionError("Não existem metas cadastradas para os testes.");
+        if (goals == null) {
+            throw new AssertionError("A lista de metas não foi retornada.");
         }
 
-        // Procura uma meta que ainda permita cadastrar tarefas.
-        for (Integer goalId : goalIds) {
+        String[] dimensions = {
+                "ENVIRONMENTAL",
+                "SOCIAL",
+                "GOVERNANCE"
+        };
+
+        for (String dimension : dimensions) {
+            long count = goals.stream()
+                    .filter(goal -> goal.get("dimension") != null)
+                    .filter(goal -> dimension.equalsIgnoreCase(
+                            goal.get("dimension").toString()
+                    ))
+                    .count();
+
+            if (count >= 10) {
+                continue;
+            }
+
+            Map<String, String> goalData = Map.of(
+                    "title", "Meta temporária BDD " + java.util.UUID.randomUUID(),
+                    "description", "Meta criada automaticamente para testes",
+                    "dimension", dimension
+            );
 
             response = given()
                     .baseUri(baseUrl)
                     .header("Authorization", "Bearer " + token)
+                    .contentType(ContentType.JSON)
+                    .body(goalData)
                     .when()
-                    .get("/api/goals/" + goalId);
+                    .post("/api/goals");
 
-            if (response.statusCode() != 200) {
-                continue;
+            if (response.statusCode() == 201) {
+                return response.jsonPath().getLong("id");
             }
 
-            java.util.List<?> tasks =
-                    response.jsonPath().getList("tasks");
-
-            int taskCount = tasks == null ? 0 : tasks.size();
-
-            if (taskCount < 10) {
-                return goalId.longValue();
+            if (response.statusCode() != 422) {
+                throw new AssertionError(
+                        "Não foi possível criar a meta temporária: "
+                                + response.asString()
+                );
             }
         }
 
         throw new AssertionError(
-                "Todas as metas cadastradas já possuem 10 tarefas. "
-                        + "É necessário liberar espaço em alguma meta para executar os testes."
+                "Todas as dimensões já possuem 10 metas. "
+                        + "Não foi possível criar uma meta temporária."
         );
     }
 
@@ -238,11 +258,18 @@ public class TaskService {
     }
 
     public void deleteTask(String endpoint, Long goalId, Long taskId) {
-
         response = given()
                 .baseUri(baseUrl)
                 .header("Authorization", "Bearer " + token)
                 .when()
                 .delete(endpoint + "/" + goalId + "/tasks/" + taskId);
+    }
+
+    public void deleteGoal(String endpoint, Long goalId) {
+        response = given()
+                .baseUri(baseUrl)
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .delete(endpoint + "/" + goalId);
     }
 }

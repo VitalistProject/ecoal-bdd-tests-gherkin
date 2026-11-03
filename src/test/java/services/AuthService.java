@@ -122,7 +122,6 @@ public class AuthService {
     public void createUsuario(String endPoint) {
 
         String url = baseUrl + endPoint;
-
         String bodyToSend = gson.toJson(usuarioModel);
 
         response = given()
@@ -134,6 +133,10 @@ public class AuthService {
                 .then()
                 .extract()
                 .response();
+
+        if (response.statusCode() == 201) {
+            token = response.jsonPath().getString("token");
+        }
     }
 
     // Envia requisição POST de login

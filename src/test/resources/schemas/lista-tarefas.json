@@ -71,7 +71,7 @@
       "completed_at": {
         "$id": "#root/items/completed_at",
         "title": "Completed_at",
-        "type": "null",
+        "type": ["string", "null"],
         "default": null
       },
       "goal_id": {

@@ -11,9 +11,9 @@ Funcionalidade: Gerenciar metas
   Cenário: Cadastrar uma meta - POST /api/goals
     Dado que eu esteja autenticado para gerenciar metas
     Quando eu cadastrar uma meta com os seguintes dados no endpoint "/api/goals":
-      | title       | Reduzir consumo de energia |
-      | description | Diminuir o consumo energético da empresa |
-      | dimension   | ENVIRONMENTAL |
+      | title       | Fortalecer a governança corporativa |
+      | description | Melhorar as práticas de governança da empresa |
+      | dimension   | GOVERNANCE |
     Então o status da resposta da meta deve ser 201
     E a resposta da meta deve possuir os campos obrigatórios
     E a resposta da meta deve respeitar o contrato "Cadastro de meta"

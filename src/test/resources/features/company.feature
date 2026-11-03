@@ -1,6 +1,6 @@
 # language: pt
 
-@funcional @regressivo @padrão
+@funcional @padrão
 Funcionalidade: Gerenciar empresas
 
   Como usuário do sistema

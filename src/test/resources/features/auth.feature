@@ -39,13 +39,14 @@ Funcionalidade: Autenticação e gerenciamento de acesso de usuários
   @regressivo
   Cenário: Cadastro de usuário sem sucesso ao utilizar um email já cadastrado - POST /api/auth/sign-up
     Dado que eu tenha os seguintes dados de cadastro:
-      | campo        | valor                 |
-      | name         | Guilhermino Silva     |
-      | email        | guilhermino@gmail.com |
-      | password     | password              |
-      | role         | user                  |
-      | company_cnpj | 12345678000100        |
-      | department   | Operations            |
+      | campo        | valor             |
+      | name         | Guilhermino Silva |
+      | email        | qualquer@email.com |
+      | password     | password          |
+      | role         | user              |
+      | company_cnpj | 12345678000100    |
+      | department   | Operations        |
+    E que o usuário já esteja cadastrado
     Quando eu enviar a requisição POST para o endpoint "/api/auth/sign-up" de cadastro de usuários
     Então o status code da resposta deve ser 409
     E o corpo de resposta de erro da api deve retornar a mensagem de erro do email "Email already registered"
@@ -85,7 +86,7 @@ Funcionalidade: Autenticação e gerenciamento de acesso de usuários
   Cenário: Login bem-sucedido de usuário - POST /api/auth/sign-in
     Dado que eu tenha os seguintes dados de login:
       | campo    | valor                 |
-      | email    | guilhermino@gmail.com |
+      | email    | bob@example.com |
       | password | password              |
     Quando eu enviar a requisição POST para o endpoint "/api/auth/sign-in" de autenticação de usuários
     Então o status code da resposta deve ser 200
@@ -94,7 +95,7 @@ Funcionalidade: Autenticação e gerenciamento de acesso de usuários
   Cenário: Login sem sucesso ao informar uma senha incorreta - POST /api/auth/sign-in
     Dado que eu tenha os seguintes dados de login:
       | campo    | valor                 |
-      | email    | guilhermino@gmail.com |
+      | email    | bob@example.com |
       | password | senhaerrada           |
     Quando eu enviar a requisição POST para o endpoint "/api/auth/sign-in" de autenticação de usuários
     Então o status code da resposta deve ser 401
@@ -112,7 +113,7 @@ Funcionalidade: Autenticação e gerenciamento de acesso de usuários
   Cenário: Login sem sucesso ao informar uma senha com menos de 8 caracteres - POST /api/auth/sign-in
     Dado que eu tenha os seguintes dados de login:
       | campo    | valor                 |
-      | email    | guilhermino@gmail.com |
+      | email    | bob@example.com |
       | password | senha                 |
     Quando eu enviar a requisição POST para o endpoint "/api/auth/sign-in" de autenticação de usuários
     Então o status code da resposta deve ser 401
@@ -121,7 +122,7 @@ Funcionalidade: Autenticação e gerenciamento de acesso de usuários
   Cenário: Validar contrato do login bem-sucedido de usuário - POST /api/auth/sign-in
     Dado que eu tenha os seguintes dados de login:
       | campo    | valor                 |
-      | email    | guilhermino@gmail.com |
+      | email    | bob@example.com |
       | password | password              |
     Quando eu enviar a requisição POST para o endpoint "/api/auth/sign-in" de autenticação de usuários
     Então o status code da resposta deve ser 200

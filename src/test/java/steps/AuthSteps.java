@@ -25,9 +25,31 @@ public class AuthSteps {
 
     @Dado("que eu tenha os seguintes dados de cadastro:")
     public void queEuTenhaOsSeguintesDadosDeCadastro(List<Map<String, String>> rows) {
+        authService.resetUsuario();
+
         for (Map<String, String> columns : rows) {
-            authService.setFieldsUsuario(columns.get("campo"), columns.get("valor"));
+            String campo = columns.get("campo");
+            String valor = columns.get("valor");
+
+            // Gera um e-mail diferente em cada cenário de cadastro
+            if ("email".equals(campo)) {
+                valor = "bdd." + java.util.UUID.randomUUID() + "@example.com";
+            }
+
+            authService.setFieldsUsuario(campo, valor);
         }
+    }
+
+    @Dado("que o usuário já esteja cadastrado")
+    public void queOUsuarioJaEstejaCadastrado() {
+
+        authService.createUsuario("/api/auth/sign-up");
+
+        Assert.assertEquals(
+                "Não foi possível preparar o usuário para o teste de duplicidade",
+                201,
+                authService.response.statusCode()
+        );
     }
 
     @Quando("eu enviar a requisição POST para o endpoint {string} de cadastro de usuários")
@@ -75,7 +97,11 @@ public class AuthSteps {
     // Recebe os dados de login da tabela Gherkin
     @Dado("que eu tenha os seguintes dados de login:")
     public void queEuTenhaOsSeguintesDadosDeLogin(DataTable dataTable) {
-        loginData = dataTable.asMap(String.class, String.class);
+        loginData = new java.util.HashMap<>();
+
+        for (Map<String, String> row : dataTable.asMaps(String.class, String.class)) {
+            loginData.put(row.get("campo"), row.get("valor"));
+        }
     }
 
     // Envia a requisição POST de login
@@ -89,7 +115,7 @@ public class AuthSteps {
     public void queEuEstejaAutenticadoNoSistema() {
 
         Map<String, String> credentials = Map.of(
-                "email", "guilhermino@gmail.com",
+                "email", "bob@example.com",
                 "password", "password"
         );
 
